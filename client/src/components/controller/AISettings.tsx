@@ -26,6 +26,48 @@ export function AISettingsPanel({ settings, hasText, onChange }: Props) {
           className="w-full accent-accent-primary min-h-[44px]"
         />
       </div>
+      <div className="mb-3">
+        <div className="flex justify-between text-sm text-text-secondary mb-1">
+          <span>Color enhancement</span>
+          <span className="font-mono">{settings.colorEnhancement}%</span>
+        </div>
+        <input
+          type="range"
+          min={0}
+          max={100}
+          value={settings.colorEnhancement}
+          onChange={(e) => update({ colorEnhancement: Number(e.target.value) })}
+          className="w-full accent-accent-primary min-h-[44px]"
+        />
+      </div>
+      <div className="mb-3">
+        <div className="flex justify-between text-sm text-text-secondary mb-1">
+          <span>Texture detail</span>
+          <span className="font-mono">{settings.textureDetail}%</span>
+        </div>
+        <input
+          type="range"
+          min={0}
+          max={100}
+          value={settings.textureDetail}
+          onChange={(e) => update({ textureDetail: Number(e.target.value) })}
+          className="w-full accent-accent-primary min-h-[44px]"
+        />
+      </div>
+      <div className="mb-3">
+        <div className="flex justify-between text-sm text-text-secondary mb-1">
+          <span>Artistic freedom</span>
+          <span className="font-mono">{settings.artisticFreedom}%</span>
+        </div>
+        <input
+          type="range"
+          min={0}
+          max={100}
+          value={settings.artisticFreedom}
+          onChange={(e) => update({ artisticFreedom: Number(e.target.value) })}
+          className="w-full accent-accent-primary min-h-[44px]"
+        />
+      </div>
       {[
         { key: 'addGlow' as const, label: 'Add glow effects' },
         { key: 'addDrips' as const, label: 'Add drips and textures' },

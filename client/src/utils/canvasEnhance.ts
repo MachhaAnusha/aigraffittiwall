@@ -9,6 +9,12 @@ const PRESET_FILTERS: Record<StylePreset, string> = {
   'Abstract Geometric': 'saturate(1.6) contrast(1.45) brightness(1.05)',
   Stencil: 'contrast(1.6) brightness(1.1) saturate(0.8)',
   Throwup: 'saturate(1.8) contrast(1.3) brightness(1.08)',
+  'Neon Glow': 'saturate(2.5) contrast(1.6) brightness(1.2) hue-rotate(-10deg)',
+  'Graffiti Cartoon': 'saturate(1.5) contrast(1.3) brightness(1.15)',
+  '3D Block': 'saturate(1.4) contrast(1.5) brightness(0.9)',
+  Vaporwave: 'saturate(1.3) contrast(1.2) brightness(1.1) hue-rotate(20deg)',
+  'Metallic Chrome': 'saturate(0.8) contrast(1.4) brightness(1.1)',
+  'Pastel Dreams': 'saturate(0.9) contrast(1.1) brightness(1.2)',
 };
 
 function loadImage(src: string): Promise<HTMLImageElement> {

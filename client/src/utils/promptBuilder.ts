@@ -7,6 +7,12 @@ export const STYLE_PRESETS = [
   'Abstract Geometric',
   'Stencil',
   'Throwup',
+  'Neon Glow',
+  'Graffiti Cartoon',
+  '3D Block',
+  'Vaporwave',
+  'Metallic Chrome',
+  'Pastel Dreams',
 ] as const;
 
 export type StylePreset = (typeof STYLE_PRESETS)[number];
@@ -20,6 +26,12 @@ export const PRESET_PALETTES: Record<StylePreset, { stroke: string; background: 
   'Abstract Geometric': { stroke: '#FFD700', background: '#111827' },
   Stencil: { stroke: '#FFFFFF', background: '#000000' },
   Throwup: { stroke: '#FF6B00', background: '#2d1b69' },
+  'Neon Glow': { stroke: '#FF00FF', background: '#0a0a0a' },
+  'Graffiti Cartoon': { stroke: '#FF6B6B', background: '#2E2E2E' },
+  '3D Block': { stroke: '#00CED1', background: '#1a1a1a' },
+  Vaporwave: { stroke: '#FF69B4', background: '#240046' },
+  'Metallic Chrome': { stroke: '#C0C0C0', background: '#0d0d0d' },
+  'Pastel Dreams': { stroke: '#FFB6C1', background: '#FFF0F5' },
 };
 
 export const FOREGROUND_COLORS = [
@@ -41,6 +53,9 @@ export interface AISettings {
   addDrips: boolean;
   enhanceLetterforms: boolean;
   language: string;
+  colorEnhancement: number;
+  textureDetail: number;
+  artisticFreedom: number;
 }
 
 export const DEFAULT_AI_SETTINGS: AISettings = {
@@ -49,6 +64,9 @@ export const DEFAULT_AI_SETTINGS: AISettings = {
   addDrips: true,
   enhanceLetterforms: true,
   language: 'English',
+  colorEnhancement: 50,
+  textureDetail: 50,
+  artisticFreedom: 50,
 };
 
 export const LANGUAGES = [
