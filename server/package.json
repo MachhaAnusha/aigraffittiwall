@@ -9,6 +9,7 @@
     "start": "node dist/server.js"
   },
   "dependencies": {
+    "@heyputer/puter.js": "^2.5.3",
     "@huggingface/inference": "^4.13.18",
     "cloudinary": "^2.5.1",
     "cors": "^2.8.5",

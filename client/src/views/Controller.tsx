@@ -9,6 +9,7 @@ import { useSubmission } from '../hooks/useSubmission';
 import { useCanvas } from '../hooks/useCanvas';
 import { exportCanvasJPEG, exportCanvasPNG } from '../utils/canvasHelpers';
 import { enhanceCanvasImage } from '../utils/canvasEnhance';
+import { generateArtworkWithPuter } from '../utils/puterAi';
 import {
   DEFAULT_AI_SETTINGS,
   PRESET_PALETTES,
@@ -34,16 +35,13 @@ export default function Controller() {
   const [stylePreset, setStylePreset] = useState<StylePreset>('Classic NYC Subway');
   const [aiSettings, setAISettings] = useState<AISettings>(DEFAULT_AI_SETTINGS);
   const [rightTab, setRightTab] = useState<'color' | 'brush' | 'style' | 'ai'>('color');
-  const [aiMode, setAiMode] = useState<'demo' | 'ai' | 'loading'>('loading');
+  const [aiMode, setAiMode] = useState<'demo' | 'ai' | 'puter' | 'loading'>('loading');
 
   const canvasApiRef = useRef<ReturnType<typeof useCanvas> | null>(null);
 
   useEffect(() => {
-    const base = import.meta.env.VITE_SOCKET_URL || '';
-    fetch(`${base}/api/health`)
-      .then((r) => r.json())
-      .then((d: { generationMode?: string }) => setAiMode(d.generationMode === 'ai' ? 'ai' : 'demo'))
-      .catch(() => setAiMode('demo'));
+    // Check if Puter.js is available (client-side AI)
+    setAiMode('puter');
   }, []);
 
   const brush = {
@@ -74,7 +72,21 @@ export default function Controller() {
       }
 
       const rawPng = exportCanvasPNG(canvas);
-      const enhancedPng = await enhanceCanvasImage(rawPng, stylePreset, aiSettings);
+      let enhancedPng: string;
+
+      try {
+        // Try Puter.js AI generation first
+        enhancedPng = await generateArtworkWithPuter({
+          canvasDataURL: rawPng,
+          textInput,
+          stylePreset,
+          aiSettings,
+        });
+      } catch (error) {
+        console.warn('Puter.js AI generation failed, falling back to canvas enhancement:', error);
+        // Fall back to canvas enhancement
+        enhancedPng = await enhanceCanvasImage(rawPng, stylePreset, aiSettings);
+      }
 
       submit({
         canvasDataURL: exportCanvasJPEG(canvas, 0.6),
@@ -127,9 +139,12 @@ export default function Controller() {
           <span className={`text-xs font-inter ${connected ? 'text-success' : 'text-danger'}`}>
             {connected ? '● Live' : '○ Offline'}
           </span>
+          {aiMode === 'puter' && (
+            <span className="text-[10px] text-success font-inter">Free AI generation active (Puter.js)</span>
+          )}
           {aiMode === 'demo' && (
             <span className="text-[10px] text-warning font-inter max-w-[220px] text-right leading-tight">
-              No AI yet — add REPLICATE_API_TOKEN to .env (see AI_SETUP.md)
+              Canvas enhancement only
             </span>
           )}
           {aiMode === 'ai' && (

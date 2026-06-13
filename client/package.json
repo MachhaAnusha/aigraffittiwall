@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@heyputer/puter.js": "^2.5.3",
     "fabric": "^6.5.4",
     "qrcode.react": "^4.2.0",
     "react": "^18.3.1",
