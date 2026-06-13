@@ -35,7 +35,7 @@ export default function Display() {
         const d = data as ArtworkPiece;
         setArtworks((prev) => {
           if (prev.some((a) => a.submissionId === d.submissionId)) return prev;
-          return [...prev, d];
+          return [d]; // Show only the latest artwork, not accumulate history
         });
         lastSubmissionRef.current = Date.now();
         setKenBurnsActive(false);
